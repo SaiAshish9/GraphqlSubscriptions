@@ -1,2 +1,2 @@
-# queries
-https://graphqlbin.com/v2/x1R7fB
+# Queries And Mutations
+https://graphqlbin.com/v2/qZKqi8
