@@ -26,13 +26,20 @@ input CreateUserInput{
      createUser(data:CreateUserInput ):User!  
      deleteUser(id:ID!):User!  
      deletePost(id:ID!):Post!
-     createPost(title:String!,title:String!,body:String,published:Boolean,author:ID!):Post!
+     createPost(title:String!,body:String,published:Boolean,author:ID!):Post!
      createComment(text:String!,author:ID!,post:ID!):Comment!
      updatePost(id:ID!,data:UpdatePostInput):Post!
      updateUser(id:ID!,data:UpdateUserInput):User!
      deleteComment(id:ID!):Comment!
      updateComment(id:ID,data:UpdateCommentInput):Comment!
     }
+
+
+type Subscription{
+    count:Int!
+    comment(postId:ID!):CommentSubscriptionPayload!
+    post:PostSubscriptionPayload!
+}
 
 
 input UpdateCommentInput{
@@ -78,4 +85,25 @@ age:Int
       author:User!
       post:Post!
   }
-   
+
+
+enum MutationType{
+
+CREATED
+UPDATED
+DELETED
+
+}
+
+
+type CommentSubscriptionPayload {
+
+  mutation:MutationType!
+  data:Comment!
+
+}  
+
+   type PostSubscriptionPayload{
+   mutation:MutationType!
+   data:Post!
+}
