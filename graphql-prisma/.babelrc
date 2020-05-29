@@ -1,0 +1,11 @@
+// babel-cli -> for running babel commands
+// babel-preset-env -> what exact changes should be done by babel
+
+{
+    "presets":[
+        "env"
+    ],
+    "plugins": [
+        "transform-object-rest-spread"
+    ]
+}
