@@ -3,12 +3,12 @@ type Book{
   title: String!
   author: String!
   isbn: String!
-  reviews: [Review!]! @relation(name:"ReviewToBook"),onDelete:CASCADE)
+  reviews: [Review!]! @relation(name:"ReviewToBook",onDelete:CASCADE)
 }
 
 type User{
   id:ID! @id
-  username: String! @unique
+  username: String! 
   reviews: [Review!]! @relation(name:"ReviewToUser",onDelete:CASCADE  )
 }
 
