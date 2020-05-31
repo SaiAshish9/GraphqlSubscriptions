@@ -6,6 +6,7 @@ const prisma = new Prisma({
    endpoint:'http://192.168.99.100:4466'
 })
 
+export { prisma as default }
 
 // prisma.query.users(null,'{name  } ')
 // .then(data=>{
@@ -101,38 +102,38 @@ const prisma = new Prisma({
 // })
 
 
-const updatePostForUser = async (postId,data)=>{
+// const updatePostForUser = async (postId,data)=>{
 
 
-   const postExists=await prisma.exists.Post({
-      id:postId
-   })
+//    const postExists=await prisma.exists.Post({
+//       id:postId
+//    })
 
-   const post = await prisma.mutation.updatePost({
-      where:{
-          id:postId
-      },
-      data
-   },' { author { id } } ') 
+   // const post = await prisma.mutation.updatePost({
+   //    where:{
+   //        id:postId
+   //    },
+   //    data
+   // },' { author { id } } ') 
    
-   const user = await prisma.query.user({
+   // const user = await prisma.query.user({
    
-   where:{
-      id:post.author.id
-   }
+   // where:{
+   //    id:post.author.id
+   // }
    
-   },' { id name email posts { id title published } } ')
+   // },' { id name email posts { id title published } } ')
    
-   return user
+   // return user
    
-   }
+   // }
    
-   updatePostForUser('ckas7jml1003u07465122nu8r',{
-      published:false
-   })
-   .then((user)=>{
-      console.log(JSON.stringify(user,undefined,2));
-   })
-   .catch(e=>{
-      console.log(e.message);
-   })
+   // updatePostForUser('ckas7jml1003u07465122nu8r',{
+   //    published:false
+   // })
+   // .then((user)=>{
+   //    console.log(JSON.stringify(user,undefined,2));
+   // })
+   // .catch(e=>{
+   //    console.log(e.message);
+   // })

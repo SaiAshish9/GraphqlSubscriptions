@@ -1,25 +1,73 @@
 const Query={
 
-    users(parent,args,{db},info){
-        if(args.query){
-            return db.users.filter(x=>{
-                return x.name.toLowerCase().includes(args.query.toLowerCase())
-            })
-        }
-             return db.users
+    users(parent,args,{db,prisma},info){
+      const opArgs={}       
+      if(args.query){
+        opArgs.where={
+            // name_contains:args.query
+            OR:[
+            {
+                name_contains:args.query
+            },
+            {
+                email_contains:args.query
+            }
+        ]
+        } 
+      }
+      return prisma.query.users(opArgs,info)
+    },   
+    // AND   
+// null - returns all scalar fields
 
-    },
-    comments(root,args,{db},info){
-          return db.comments
+        // if(args.query){
+        //     return db.users.filter(x=>{
+        //         return x.name.toLowerCase().includes(args.query.toLowerCase())
+        //     })
+        // }
+        //      return db.users
+
+
+    comments(root,{query},{db,prisma},info){
+
+        const opArgs={}  
+
+        // if(query){
+        //     opArgs.where={
+        //       text_contains:query
+        //     }
+        // }
+
+          return prisma.query.comments(opArgs,info)
     },
 
-    posts(parent,args,{db},info){
+    posts(parent,args,{db,prisma},info){
+
+
+        const opArgs={}
+
         if(args.query){
-            return db.posts.filter(x=>{
-                return x.title.toLowerCase().includes(args.query.toLowerCase())||x.body.toLowerCase().includes(args.query.toLowerCase())
-            })
+            opArgs.where={
+                OR:[
+                {
+                    title_contains:args.query
+                },
+                {
+                    body_contains:args.query
+                }
+                ]
+            }
         }
-             return db.posts
+
+
+return prisma.query.posts(opArgs,info)
+
+        // if(args.query){
+        //     return db.posts.filter(x=>{
+        //         return x.title.toLowerCase().includes(args.query.toLowerCase())||x.body.toLowerCase().includes(args.query.toLowerCase())
+        //     })
+        // }
+        //      return db.posts
 
     },
 

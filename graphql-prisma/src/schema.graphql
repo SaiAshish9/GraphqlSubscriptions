@@ -19,7 +19,6 @@
 input CreateUserInput{
     name:String!,
     email:String,
-    age:Int
 }
 
  type Mutation{
@@ -57,7 +56,6 @@ published:Boolean
 input UpdateUserInput{
 name:String!
 email:String
-age:Int
 }
 
 
@@ -65,7 +63,6 @@ age:Int
       id:ID!
       name:String!
       email:String
-      age:Int
       posts:[Post!]!
       comments:[Comment!]!
   }
@@ -99,11 +96,11 @@ DELETED
 type CommentSubscriptionPayload {
 
   mutation:MutationType!
-  data:Comment!
+  node:Comment
 
 }  
 
    type PostSubscriptionPayload{
    mutation:MutationType!
-   data:Post!
+   node:Post
 }

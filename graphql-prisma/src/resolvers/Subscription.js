@@ -15,21 +15,38 @@ const Subscription={
         }
     },
     comment:{
-        subscribe(parent,{postId},{db,pubsub},info){
-            const post=db.posts.find(post=>post.id===postId && post.published )
+        subscribe(parent,{postId},{db,pubsub,prisma},info){
+            
+            return prisma.subscription.comment({where:{
+               node:{
+                   post:{
+                       id: postId
+                   }
+               }
+            }},
+            info)
+    
+            // whenever a comment is added to particular post
 
-            if(!post){
-                throw new Error('Post not found')
-            }
-
-            console.log(`comment ${postId}`)
-
-            return pubsub.asyncIterator(`comment ${postId}`)
+            // const post=db.posts.find(post=>post.id===postId && post.published )
+            // if(!post){
+            //     throw new Error('Post not found')
+            // }
+            // console.log(`comment ${postId}`)
+            // return pubsub.asyncIterator(`comment ${postId}`)
+       
         }
     },
     post:{
-        subscribe(parent,args,{db,pubsub},info){
-            return pubsub.asyncIterator('post')
+        subscribe(parent,args,{db,pubsub,prisma},info){
+            // return pubsub.asyncIterator('post')
+
+            return prisma.subscription.post({
+                where:{
+                    published:true
+                }
+            },info)
+
         }
     }
 }

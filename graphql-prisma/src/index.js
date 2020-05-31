@@ -21,7 +21,7 @@ import Post from './resolvers/Post'
 import Comment from './resolvers/Comment'
 import Subscription from './resolvers/Subscription'
 
-import './prisma'
+import prisma from './prisma'
 
 const resolvers={
     Query,
@@ -39,7 +39,8 @@ const server= new GraphQLServer({
     resolvers,
     context:{
         db,
-        pubsub
+        pubsub,
+        prisma
     }
 })
 
