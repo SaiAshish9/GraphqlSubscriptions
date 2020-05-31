@@ -3,8 +3,21 @@ import { Prisma } from 'prisma-binding'
 
 const prisma = new Prisma({
    typeDefs:'src/generated/prisma.graphql',
-   endpoint:'http://192.168.99.100:4466'
+   endpoint:'http://192.168.99.100:4466',
+   secret: 'supersecret'
 })
+
+
+
+// prisma delete
+// npm run get-schema
+// prisma:prisma.yml //alternative
+// {
+//    "Authorization":"Bearer "
+// }
+
+// cd prisma
+// prisma token
 
 export { prisma as default }
 
