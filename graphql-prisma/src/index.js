@@ -14,35 +14,30 @@
 
 import { GraphQLServer,PubSub } from 'graphql-yoga'
 import db from './db'
-import Query from './resolvers/Query'
-import Mutation from './resolvers/Mutation'
-import User from './resolvers/User'
-import Post from './resolvers/Post'
-import Comment from './resolvers/Comment'
-import Subscription from './resolvers/Subscription'
-
+import { resolvers,fragmentReplacements } from './resolvers/index'
 import prisma from './prisma'
 
-const resolvers={
-    Query,
-    Mutation,
-    Subscription,
-    Post,
-    Comment,
-    User
-}
+
 
 const pubsub=new PubSub()
 
 const server= new GraphQLServer({
     typeDefs:'./src/schema.graphql',
     resolvers,
-    context:{
-        db,
-        pubsub,
-        prisma
-    }
+    context(request){
+
+    // console.log(request.request.headers)
+        return {
+            db,
+            pubsub,
+            prisma,
+            request
+        }
+    },
+    fragmentReplacements
 })
+
+// context can be used as a object or a function
 
 server.start(()=>{
     console.log('server started')

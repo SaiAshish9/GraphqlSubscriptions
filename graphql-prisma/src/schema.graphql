@@ -9,6 +9,7 @@
      id:ID!
      name:String!
      age:Int!
+     post(id:ID!):Post!
      height:Float
      employed:Boolean!
      users(query:String):[User!]!
@@ -17,27 +18,47 @@
 
 
 input CreateUserInput{
-    name:String!,
-    email:String,
+    name:String!
+    email:String
+    password: String!
 }
 
  type Mutation{
-     createUser(data:CreateUserInput ):User!  
+     createUser(data:CreateUserInput ):AuthPayload!  
      deleteUser(id:ID!):User!  
      deletePost(id:ID!):Post!
-     createPost(title:String!,body:String,published:Boolean,author:ID!):Post!
-     createComment(text:String!,author:ID!,post:ID!):Comment!
+     createPost(data:CreatePostInput):Post!
+     createComment(data:CreateCommentInput):Comment!
      updatePost(id:ID!,data:UpdatePostInput):Post!
-     updateUser(id:ID!,data:UpdateUserInput):User!
+     updateUser(data:UpdateUserInput):User!
      deleteComment(id:ID!):Comment!
      updateComment(id:ID,data:UpdateCommentInput):Comment!
+     login( data:LoginUserInput! ):AuthPayload!
+
+
     }
 
+type CreateCommentInput{
+text:String!
+post:ID!
+}
+
+input CreatePostInput{
+title:String!
+body:String
+published:Boolean
+}
+
+input LoginUserInput{
+    email: String!
+    password: String!
+}
 
 type Subscription{
     count:Int!
     comment(postId:ID!):CommentSubscriptionPayload!
     post:PostSubscriptionPayload!
+    myPost:PostSubscriptionPayload!
 }
 
 
@@ -56,8 +77,14 @@ published:Boolean
 input UpdateUserInput{
 name:String!
 email:String
+password:String
 }
 
+
+type AuthPayload{
+token:String!
+user:User!
+}
 
   type User{
       id:ID!
