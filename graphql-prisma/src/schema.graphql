@@ -1,10 +1,14 @@
 
+# import UserOrderByInput,PostOrderByInput,CommentOrderByInput from './generated/prisma.graphql
+
+
  type Query{
      greeting(name:String):String!
      add(a:Float!,b:Float!):Float!
      add1(numbers:[Float!]!):Float!
      me: User!
-     comments:[Comment!]!
+     comments(first:Int,skip:Int,after:Int,CommentOrderByInput):[Comment!]!
+     myPosts(query:String,first:Int,skip:Int,after:String,PostOrderByInput):[Post!]!
      grapes:[Int!]!
      id:ID!
      name:String!
@@ -12,8 +16,8 @@
      post(id:ID!):Post!
      height:Float
      employed:Boolean!
-     users(query:String):[User!]!
-     posts(query:String):[Post!]!
+     users(query:String,first:Int,skip:Int,after:String,orderBy:UserOrderByInput):[User!]!
+     posts(query:String,first:Int,skip:Int,after:String,orderBy:PostOrderByInput):[Post!]!
  }
 
 
@@ -93,6 +97,8 @@ user:User!
       password:String!
       posts:[Post!]!
       comments:[Comment!]!
+      updatedAt:String!
+      createdAt:String!
   }
 
   type Post{
@@ -102,6 +108,8 @@ user:User!
       published:Boolean
       author:User!
       comments:[Comment!]!
+      updatedAt:String!
+      createdAt:String!
   }
 
   type Comment{
@@ -109,6 +117,8 @@ user:User!
       text:String!
       author:User!
       post:Post!
+      updatedAt:String!
+      createdAt:String!
   }
 
 

@@ -3,7 +3,12 @@ import getUserId from '../utils/getUserId'
 const Query={
 
     users(parent,args,{db,prisma},info){
-      const opArgs={}       
+      const opArgs={
+          first:args.first,
+          skip:args.skip,
+          after:args.after,
+          orderBy:args.orderBy
+      }       
       if(args.query){
         opArgs.where={
             // name_contains:args.query
@@ -30,9 +35,14 @@ const Query={
         //      return db.users
 
 
-    comments(root,{query},{db,prisma},info){
+    comments(root,args,{db,prisma},info){
 
-        const opArgs={}  
+        const opArgs={
+            first: args.first,
+            skip:args.skip,
+            after:args.after,
+            orderBy:args.orderBy
+        }  
 
         // if(query){
         //     opArgs.where={
@@ -53,7 +63,11 @@ const userId=getUserId(request)
 author:{
     id:userId
 }
-            }
+            },
+            first:args.first,
+            skip:args.skip,
+            after:args.after,
+            orderBy:args.orderBy
         }
 
         if(args.query){
@@ -78,7 +92,11 @@ return prisma.query.posts(opArgs,info)
         const opArgs={
             where:{
                  published:true
-            }
+            },
+            first:args.first,
+            skip:args.skip,
+            after:args.after,
+            orderBy:args.orderBy
         }
 
         if(args.query){
